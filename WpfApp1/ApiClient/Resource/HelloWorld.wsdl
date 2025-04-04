@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://spring.io/guides/gs-producing-web-service" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+
+	<xs:element name="getHelloWorldRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="param" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getHelloWorldResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element default="default message." name="message" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getHelloWorldRequest">
+    <wsdl:part element="tns:getHelloWorldRequest" name="getHelloWorldRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHelloWorldResponse">
+    <wsdl:part element="tns:getHelloWorldResponse" name="getHelloWorldResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloWorldPort">
+    <wsdl:operation name="getHelloWorld">
+      <wsdl:input message="tns:getHelloWorldRequest" name="getHelloWorldRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getHelloWorldResponse" name="getHelloWorldResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HelloWorldPortSoap11" type="tns:HelloWorldPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getHelloWorld">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getHelloWorldRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHelloWorldResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloWorldPortService">
+    <wsdl:port binding="tns:HelloWorldPortSoap11" name="HelloWorldPortSoap11">
+      <soap:address location="https://demo-latest-owxa.onrender.com:443/helloWorld/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
